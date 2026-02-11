@@ -1,0 +1,56 @@
+<h1 class="page-title">Directive-Level Injection</h1>
+<p class="page-subtitle">
+  Directives can also provide services using the <code>providers</code> array in the
+  <code>&#64;Directive</code> decorator. This creates a new injector at the
+  directive's host element, scoping the service instance to that element and its
+  descendants.
+</p>
+
+<app-code-snippet
+  title="How it's provided (highlight.directive.ts)"
+  [code]="directiveCode"
+/>
+
+<app-code-snippet
+  title="Using it in a template"
+  [code]="usageCode"
+/>
+
+<div class="demo-section">
+  <h2 class="demo-section-title">Live Demo: Directive-Scoped Instances</h2>
+  <div class="explanation-box">
+    Each <code>div</code> below has the <code>appHighlight</code> directive applied.
+    The directive provides its own <code>TrackerService</code>, creating a unique
+    instance for each usage. We access it via the directive's <code>exportAs</code>
+    template reference.
+  </div>
+
+  <div class="card-grid">
+    <div class="directive-box" appHighlight #hl1="appHighlight">
+      <div class="directive-label">Element with appHighlight directive (1)</div>
+      <app-instance-card [tracker]="hl1.tracker" />
+    </div>
+
+    <div class="directive-box" appHighlight #hl2="appHighlight">
+      <div class="directive-label">Element with appHighlight directive (2)</div>
+      <app-instance-card [tracker]="hl2.tracker" />
+    </div>
+  </div>
+</div>
+
+<div class="demo-section">
+  <h2 class="demo-section-title">Root Instance (unshadowed)</h2>
+  <div class="explanation-box">
+    Outside the directive's scope, the root-level TrackerService is still used.
+    The directive-level instances only exist within their host elements.
+  </div>
+  <div class="card-grid">
+    <app-instance-card [tracker]="rootTracker" />
+  </div>
+</div>
+
+<div class="explanation-box success">
+  <strong>Key takeaway:</strong> Directives participate in the injector tree just like
+  components. Each directive instance with <code>providers</code> creates a new injector
+  boundary, giving its host element a unique service instance.
+</div>

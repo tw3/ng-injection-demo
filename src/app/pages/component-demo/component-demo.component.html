@@ -1,0 +1,46 @@
+<h1 class="page-title">Component-Level Injection</h1>
+<p class="page-subtitle">
+  When a service is provided in a component's <code>providers</code> array, Angular
+  creates a <strong>new instance for each component instance</strong>. This instance is
+  shared with the component's children (unless they also provide their own).
+</p>
+
+<app-code-snippet
+  title="How it's provided"
+  [code]="componentCode"
+/>
+
+<div class="demo-section">
+  <h2 class="demo-section-title">Live Demo: Separate Instances Per Component</h2>
+  <div class="explanation-box">
+    Each <code>&lt;app-isolated-counter&gt;</code> below has
+    <code>providers: [provideTracker('Component')]</code> in its decorator.
+    This means every instance gets its <strong>own TrackerService</strong> with a unique
+    ID and independent counter.
+  </div>
+
+  <div class="card-grid">
+    <app-isolated-counter label="Counter Widget A" />
+    <app-isolated-counter label="Counter Widget B" />
+    <app-isolated-counter label="Counter Widget C" />
+  </div>
+</div>
+
+<div class="demo-section">
+  <h2 class="demo-section-title">Meanwhile, the Root Instance Still Exists</h2>
+  <div class="explanation-box">
+    This page's own component does <strong>not</strong> provide TrackerService, so it
+    inherits the root-level instance. The component-level instances above
+    <em>shadow</em> the root one within their own subtree.
+  </div>
+
+  <div class="card-grid">
+    <app-instance-card [tracker]="rootTracker" />
+  </div>
+</div>
+
+<div class="explanation-box success">
+  <strong>Key takeaway:</strong> Check the Instance Monitor (bottom-right). You should see
+  the root instance <em>plus</em> three component-level instances &mdash; four total.
+  Each component-level counter is independent.
+</div>

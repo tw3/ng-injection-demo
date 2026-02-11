@@ -1,0 +1,103 @@
+.monitor-container {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.monitor-toggle {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18) !important;
+}
+
+.toggle-label {
+  margin-left: 4px;
+}
+
+.monitor-panel {
+  background: var(--mat-sys-surface-container);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 16px;
+  padding: 0;
+  min-width: 380px;
+  max-height: 320px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+}
+
+.monitor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.header-text {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.instance-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.instance-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--mat-sys-surface);
+  transition: background 0.15s;
+}
+
+.instance-row:hover {
+  background: var(--mat-sys-surface-container-high);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.inst-id {
+  font-weight: 600;
+  min-width: 28px;
+}
+
+.inst-level {
+  font-weight: 500;
+  min-width: 80px;
+}
+
+.inst-counter {
+  color: var(--mat-sys-on-surface-variant);
+  flex: 1;
+}
+
+.inst-uid {
+  color: var(--mat-sys-on-surface-variant);
+  font-family: 'Cascadia Code', 'Fira Code', monospace;
+  font-size: 11px;
+}
+
+.no-instances {
+  color: var(--mat-sys-on-surface-variant);
+  font-style: italic;
+  font-size: 13px;
+  padding: 12px;
+  text-align: center;
+}

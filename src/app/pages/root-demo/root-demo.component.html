@@ -1,0 +1,44 @@
+<h1 class="page-title">Root-Level Injection</h1>
+<p class="page-subtitle">
+  When a service is provided at the <strong>root level</strong> (via
+  <code>providedIn: 'root'</code> or in the application config's <code>providers</code>
+  array), Angular creates a <strong>single instance</strong> shared across the entire
+  application. This is the most common pattern for services.
+</p>
+
+<app-code-snippet
+  title="How it's provided (app.config.ts)"
+  [code]="configCode"
+/>
+
+<app-code-snippet
+  title="Alternative: using @Injectable decorator"
+  [code]="injectableCode"
+/>
+
+<div class="demo-section">
+  <h2 class="demo-section-title">Live Demo: Singleton Behavior</h2>
+  <div class="explanation-box">
+    All three components below inject <code>TrackerService</code> without providing their own.
+    They all receive the <strong>same instance</strong> from the root injector.
+    Try incrementing the counter in any card &mdash; all three update together because
+    they share the same object reference.
+  </div>
+
+  <h3 style="margin-bottom: 12px;">Parent Component</h3>
+  <div class="card-grid">
+    <app-instance-card [tracker]="tracker" />
+  </div>
+
+  <h3 style="margin-bottom: 12px;">Child Components (same instance!)</h3>
+  <div class="card-grid">
+    <app-root-child label="Child A" />
+    <app-root-child label="Child B" />
+  </div>
+</div>
+
+<div class="explanation-box success">
+  <strong>Key takeaway:</strong> Notice all cards show the same <code>#ID</code> and
+  <code>UID</code>. The counter is shared &mdash; incrementing from any card updates all
+  of them. This is the singleton pattern in action.
+</div>

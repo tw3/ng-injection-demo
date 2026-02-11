@@ -1,0 +1,61 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.toolbar-title {
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.toolbar-spacer {
+  flex: 1;
+}
+
+.toolbar-subtitle {
+  font-size: 14px;
+  opacity: 0.8;
+  font-weight: 300;
+}
+
+.sidenav-container {
+  flex: 1;
+}
+
+.sidenav {
+  width: 220px;
+  border-right: 1px solid var(--mat-sys-outline-variant);
+}
+
+.nav-section-label {
+  padding: 16px 16px 4px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.active-link {
+  background: var(--mat-sys-secondary-container) !important;
+  color: var(--mat-sys-on-secondary-container) !important;
+  border-radius: 0 24px 24px 0;
+}
+
+.main-content {
+  background: var(--mat-sys-surface-container-lowest);
+}
+
+.page-wrapper {
+  padding: 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-bottom: 100px; // space for instance monitor
+}

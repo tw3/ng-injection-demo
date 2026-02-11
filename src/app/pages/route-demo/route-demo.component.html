@@ -1,0 +1,107 @@
+<h1 class="page-title">Route-Level Injection</h1>
+<p class="page-subtitle">
+  Services can be provided in a route's <code>providers</code> array. Angular creates
+  a new <strong>environment injector</strong> for that route, scoping the service to
+  the route and all its child routes. However, by default the route injector is
+  <strong>not destroyed</strong> when the user navigates away &mdash; the instance
+  stays alive in memory. Cleanup only happens when
+  <code>withExperimentalAutoCleanupInjectors()</code> is enabled in the router
+  configuration.
+</p>
+
+<app-code-snippet
+  title="How it's provided (app.routes.ts)"
+  [code]="routeCode"
+/>
+
+<div class="demo-section">
+  <h2 class="demo-section-title">Injector Cleanup Behavior</h2>
+
+  <div class="cleanup-toggle-section">
+    <div class="toggle-row">
+      <mat-slide-toggle
+        [checked]="autoCleanup"
+        (change)="toggleAutoCleanup()"
+      >
+        <code>withExperimentalAutoCleanupInjectors()</code>
+      </mat-slide-toggle>
+      <mat-chip-set>
+        @if (autoCleanup) {
+          <mat-chip highlighted class="status-chip enabled">Enabled</mat-chip>
+        } @else {
+          <mat-chip class="status-chip disabled">Disabled</mat-chip>
+        }
+      </mat-chip-set>
+    </div>
+    <p class="toggle-hint">
+      Toggling this reloads the app because router features are set at bootstrap time.
+    </p>
+  </div>
+
+  <app-code-snippet
+    title="How to enable auto-cleanup (app.config.ts)"
+    [code]="cleanupCode"
+  />
+
+  @if (autoCleanup) {
+    <div class="explanation-box success">
+      <strong>Auto-cleanup is ON.</strong> Navigate away from this page (e.g., click
+      &ldquo;Root&rdquo; in the sidebar) and watch the Instance Monitor &mdash; the Route
+      instance will be <strong>destroyed</strong> after navigation completes. When you
+      return, a new instance with a different ID is created.
+    </div>
+  } @else {
+    <div class="explanation-box warning">
+      <strong>Auto-cleanup is OFF (default).</strong> Navigate away from this page (e.g.,
+      click &ldquo;Root&rdquo; in the sidebar) and watch the Instance Monitor &mdash; the
+      Route instance <strong>stays alive!</strong> The injector is not destroyed by
+      default. When you return, the same instance (same ID, same counter value) is reused.
+    </div>
+  }
+</div>
+
+<div class="demo-section">
+  <h2 class="demo-section-title">Live Demo: Route-Scoped Instance</h2>
+  <div class="explanation-box">
+    The <code>/route</code> path provides <code>TrackerService</code> at the route level.
+    This component and both child routes below share the <strong>same route-scoped
+    instance</strong>. Switch between Child A and Child B &mdash; the counter persists
+    because they share the route's injector.
+  </div>
+
+  <h3 style="margin-bottom: 12px;">Route Parent's Instance</h3>
+  <div class="card-grid">
+    <app-instance-card [tracker]="routeTracker" />
+  </div>
+
+  <h3 style="margin-bottom: 12px;">Child Routes (share the same instance)</h3>
+  <nav class="child-nav">
+    <a mat-flat-button routerLink="child-a" routerLinkActive="active-child">
+      Child A
+    </a>
+    <a mat-flat-button routerLink="child-b" routerLinkActive="active-child">
+      Child B
+    </a>
+  </nav>
+
+  <div class="child-outlet">
+    <router-outlet />
+  </div>
+</div>
+
+@if (autoCleanup) {
+  <div class="explanation-box success">
+    <strong>Try it:</strong> Increment the counter above, navigate to &ldquo;Root&rdquo;
+    in the sidebar, then come back. The instance ID will change and the counter resets
+    &mdash; the route injector was destroyed by
+    <code>withExperimentalAutoCleanupInjectors()</code>.
+  </div>
+} @else {
+  <div class="explanation-box warning">
+    <strong>Try it:</strong> Increment the counter above, navigate to &ldquo;Root&rdquo;
+    in the sidebar, then come back. The instance ID and counter are
+    <strong>preserved</strong> &mdash; the route injector was <em>not</em> destroyed.
+    Enable <code>withExperimentalAutoCleanupInjectors()</code> above to see the
+    difference.
+  </div>
+}

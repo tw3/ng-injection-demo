@@ -1,0 +1,33 @@
+<h2 class="demo-section-title">"Why isn't my data shared?"</h2>
+<div class="explanation-box warning">
+  <strong>The bug:</strong> A developer creates two sibling widgets that both provide
+  <code>TrackerService</code> at the component level. They expect incrementing the
+  counter in Widget A to also update Widget B. But it doesn't &mdash; each widget
+  has its own instance!
+</div>
+
+<app-code-snippet
+  title="The problematic code"
+  [code]="bugCode"
+/>
+
+<p style="margin-bottom: 16px; font-size: 14px;">
+  Try incrementing the counter in Widget A. Widget B does <strong>not</strong> update
+  because they have different instances:
+</p>
+
+<div class="card-grid">
+  <app-pitfall-widget-a />
+  <app-pitfall-widget-b />
+</div>
+
+<app-code-snippet
+  title="The fix: provide at a shared ancestor level"
+  [code]="fixCode"
+/>
+
+<div class="explanation-box success">
+  <strong>The fix:</strong> Remove <code>providers</code> from both widgets and provide
+  the service at a shared ancestor (parent component, route, or root). This way, both
+  widgets inherit the same singleton instance.
+</div>

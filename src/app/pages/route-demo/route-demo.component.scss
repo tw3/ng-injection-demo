@@ -1,0 +1,41 @@
+.child-nav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.active-child {
+  outline: 2px solid var(--mat-sys-primary);
+}
+
+.child-outlet {
+  border: 1px dashed var(--mat-sys-outline-variant);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.cleanup-toggle-section {
+  background: var(--mat-sys-surface-container);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.toggle-hint {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.status-chip {
+  font-weight: 500;
+  font-size: 12px;
+}

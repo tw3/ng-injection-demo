@@ -1,0 +1,36 @@
+<h2 class="demo-section-title">"Accidental override"</h2>
+<div class="explanation-box warning">
+  <strong>The bug:</strong> A parent relies on a root-level service for shared state.
+  A child component re-provides the same service in its own
+  <code>providers</code> array. The child silently receives a <strong>fresh, empty
+  instance</strong> instead of the root one, and state appears to be "lost."
+</div>
+
+<app-code-snippet
+  title="The problematic code"
+  [code]="bugCode"
+/>
+
+<p style="margin-bottom: 16px; font-size: 14px;">
+  The parent sees the root instance, but the child gets a brand-new one. Increment
+  the parent's counter &mdash; the child's counter stays at zero:
+</p>
+
+<div class="card-grid">
+  <div>
+    <h4 style="margin-bottom: 8px;">Parent (uses root instance)</h4>
+    <app-instance-card [tracker]="rootTracker" />
+  </div>
+  <app-override-child />
+</div>
+
+<app-code-snippet
+  title="The fix: don't re-provide in the child"
+  [code]="fixCode"
+/>
+
+<div class="explanation-box success">
+  <strong>The fix:</strong> Remove the <code>providers</code> array from the child
+  component. Without its own provider, the child will inherit the root instance and
+  share state with the parent as expected.
+</div>

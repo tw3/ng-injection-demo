@@ -1,0 +1,128 @@
+<h1 class="page-title">Angular Dependency Injection Hierarchy</h1>
+<p class="page-subtitle">
+  Angular's DI system is <strong>hierarchical</strong>. Services can be provided at multiple
+  levels, and each level creates its own injector. When a component requests a dependency,
+  Angular walks up the injector tree until it finds a provider. If you provide the same
+  service at multiple levels, you end up with <strong>multiple instances</strong> &mdash;
+  which can lead to subtle, hard-to-debug issues.
+</p>
+
+<div class="tree-container">
+  <div class="tree">
+    <!-- Platform -->
+    <a class="tree-node" routerLink="/platform" style="--node-color: #ef5350">
+      <div class="node-icon">P</div>
+      <div class="node-info">
+        <div class="node-title">Platform</div>
+        <div class="node-desc">Shared across all apps on the page</div>
+      </div>
+    </a>
+    <div class="tree-connector"></div>
+
+    <!-- Root -->
+    <a class="tree-node" routerLink="/root" style="--node-color: #42a5f5">
+      <div class="node-icon">R</div>
+      <div class="node-info">
+        <div class="node-title">Root</div>
+        <div class="node-desc">Application-wide singleton</div>
+      </div>
+    </a>
+    <div class="tree-connector"></div>
+
+    <!-- Branch: Route and Module -->
+    <div class="tree-branch">
+      <a class="tree-node" routerLink="/route" style="--node-color: #ffa726">
+        <div class="node-icon">Rt</div>
+        <div class="node-info">
+          <div class="node-title">Route</div>
+          <div class="node-desc">Scoped to a route and its children</div>
+        </div>
+      </a>
+      <a class="tree-node" routerLink="/module" style="--node-color: #26a69a">
+        <div class="node-icon">M</div>
+        <div class="node-info">
+          <div class="node-title">Module</div>
+          <div class="node-desc">Scoped to an NgModule</div>
+        </div>
+      </a>
+    </div>
+    <div class="tree-connector"></div>
+
+    <!-- Component -->
+    <a class="tree-node" routerLink="/component" style="--node-color: #66bb6a">
+      <div class="node-icon">C</div>
+      <div class="node-info">
+        <div class="node-title">Component</div>
+        <div class="node-desc">Each component instance gets its own</div>
+      </div>
+    </a>
+    <div class="tree-connector"></div>
+
+    <!-- Directive -->
+    <a class="tree-node" routerLink="/directive" style="--node-color: #ab47bc">
+      <div class="node-icon">D</div>
+      <div class="node-info">
+        <div class="node-title">Directive</div>
+        <div class="node-desc">Scoped to the directive's host element</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<div class="explanation-box" style="margin-top: 32px;">
+  <strong>How to use this demo:</strong> Click any level in the tree above (or use the
+  sidebar navigation) to see a live demonstration. Each page provides a
+  <code>TrackerService</code> at that level. Every instance gets a unique ID and color.
+  Open the <strong>Instance Monitor</strong> (floating button, bottom-right) to see all
+  live instances across the app in real time.
+</div>
+
+<h2 class="demo-section-title" style="margin-top: 32px;">How the Injector Tree Works</h2>
+
+<div class="concepts-grid">
+  <mat-card class="concept-card">
+    <mat-card-header>
+      <mat-icon matCardAvatar style="color: #42a5f5">arrow_upward</mat-icon>
+      <mat-card-title>Resolution Walks Up</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        When a component injects a service, Angular starts at the component's own injector
+        and walks <strong>up the tree</strong> until it finds a provider. The first match wins.
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="concept-card">
+    <mat-icon matCardAvatar style="color: #ffa726">content_copy</mat-icon>
+    <mat-card-header>
+      <mat-card-title>Shadowing</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        If a child injector provides the same service as a parent, the child's provider
+        <strong>shadows</strong> the parent. Components below the child get the child's instance.
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="concept-card">
+    <mat-card-header>
+      <mat-icon matCardAvatar style="color: #ff7043">warning</mat-icon>
+      <mat-card-title>Multiple Instances</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Providing a service at multiple levels creates <strong>multiple instances</strong>.
+        This can cause bugs where components think they share state but actually don't.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div style="text-align: center; margin-top: 24px;">
+  <a mat-flat-button routerLink="/pitfalls" color="warn">
+    <mat-icon>warning</mat-icon>
+    See Common Pitfalls
+  </a>
+</div>

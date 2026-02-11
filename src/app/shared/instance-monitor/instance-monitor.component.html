@@ -1,0 +1,39 @@
+<div class="monitor-container">
+  <button
+    mat-fab
+    extended
+    class="monitor-toggle"
+    (click)="expanded.set(!expanded())"
+  >
+    <mat-icon [matBadge]="registry.count()" matBadgeColor="accent">
+      monitor_heart
+    </mat-icon>
+    <span class="toggle-label">Instance Monitor</span>
+  </button>
+
+  @if (expanded()) {
+    <div class="monitor-panel">
+      <div class="monitor-header">
+        <span class="header-text">
+          {{ registry.count() }} live TrackerService instance(s)
+        </span>
+        <button mat-icon-button (click)="expanded.set(false)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="instance-list">
+        @for (inst of registry.instances(); track inst.instanceId) {
+          <div class="instance-row">
+            <span class="dot" [style.background]="inst.color"></span>
+            <span class="inst-id">#{{ inst.instanceId }}</span>
+            <span class="inst-level" [style.color]="inst.color">{{ inst.level }}</span>
+            <span class="inst-counter">counter: {{ inst.counter() }}</span>
+            <span class="inst-uid">{{ inst.uid }}</span>
+          </div>
+        } @empty {
+          <div class="no-instances">No active TrackerService instances</div>
+        }
+      </div>
+    </div>
+  }
+</div>

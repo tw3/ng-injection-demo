@@ -1,0 +1,31 @@
+<mat-card class="instance-card" [style.border-left-color]="tracker().color">
+  <mat-card-header>
+    <div class="card-header-row">
+      <span class="level-badge" [style.background]="tracker().color">
+        #{{ tracker().instanceId }}
+      </span>
+      <span class="level-label">{{ tracker().level }} Level</span>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="meta">
+      <span class="uid">UID: {{ tracker().uid }}</span>
+      <span class="separator">|</span>
+      <span class="created">Created: {{ tracker().createdAt | date:'HH:mm:ss.SSS' }}</span>
+    </div>
+    <div class="counter-row">
+      <span class="counter-label">Counter:</span>
+      <span class="counter-value" [style.color]="tracker().color">
+        {{ tracker().counter() }}
+      </span>
+      <div class="counter-buttons">
+        <button mat-mini-fab (click)="tracker().decrement()" class="counter-btn">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" (click)="tracker().increment()" class="counter-btn">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

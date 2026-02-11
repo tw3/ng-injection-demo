@@ -1,0 +1,22 @@
+.sim-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.destroyed-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  border: 2px dashed var(--mat-sys-outline-variant);
+  border-radius: 12px;
+  color: var(--mat-sys-on-surface-variant);
+  margin-bottom: 24px;
+}
+
+.destroyed-placeholder p {
+  margin: 8px 0 0;
+  font-size: 14px;
+}

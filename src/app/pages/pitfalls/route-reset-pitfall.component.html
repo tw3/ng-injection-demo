@@ -1,0 +1,63 @@
+<h2 class="demo-section-title">"Route navigation resets my state!"</h2>
+<div class="explanation-box warning">
+  <strong>The bug:</strong> A developer provides a service at the route level for a
+  feature page. The user fills out a form (state stored in the service), navigates
+  to another page, then comes back &mdash; all state is gone! This happens when
+  <code>withExperimentalAutoCleanupInjectors()</code> is enabled (or the component
+  is destroyed via <code>&#64;if</code>), causing the route-level injector to be
+  destroyed on navigation and recreated fresh.
+</div>
+
+<app-code-snippet
+  title="The problematic setup"
+  [code]="bugCode"
+/>
+
+<p style="margin-bottom: 16px; font-size: 14px;">
+  <strong>Simulate it:</strong> Increment the counter, then click "Destroy" to simulate
+  navigation away. Click "Recreate" to simulate navigating back. The instance ID changes
+  and the counter resets!
+</p>
+
+<div class="sim-controls">
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="visible.set(true)"
+    [disabled]="visible()"
+  >
+    <mat-icon>add_circle</mat-icon>
+    Recreate (navigate to route)
+  </button>
+  <button
+    mat-flat-button
+    color="warn"
+    (click)="visible.set(false)"
+    [disabled]="!visible()"
+  >
+    <mat-icon>remove_circle</mat-icon>
+    Destroy (navigate away)
+  </button>
+</div>
+
+@if (visible()) {
+  <app-ephemeral-widget />
+} @else {
+  <div class="destroyed-placeholder">
+    <mat-icon style="font-size: 48px; width: 48px; height: 48px; opacity: 0.3;">
+      delete_outline
+    </mat-icon>
+    <p>Component destroyed &mdash; service instance is gone!</p>
+  </div>
+}
+
+<app-code-snippet
+  title="The fix: move state to root or use a state management solution"
+  [code]="fixCode"
+/>
+
+<div class="explanation-box success">
+  <strong>The fix:</strong> If state should survive navigation, provide the service at the
+  <strong>root level</strong> instead of the route level. Alternatively, persist critical
+  state to localStorage, a state management store (NgRx, etc.), or a backend API.
+</div>

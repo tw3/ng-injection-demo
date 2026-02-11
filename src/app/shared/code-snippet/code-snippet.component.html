@@ -1,0 +1,6 @@
+<div class="code-container">
+  @if (title()) {
+    <div class="code-title">{{ title() }}</div>
+  }
+  <pre class="code-block"><code [innerHTML]="highlightedCode()"></code></pre>
+</div>

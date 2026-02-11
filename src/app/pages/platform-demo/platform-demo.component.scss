@@ -1,0 +1,33 @@
+.platform-tokens {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.token-card {
+  background: var(--mat-sys-surface-container);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-left: 4px solid #ef5350;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.token-name {
+  font-family: 'Cascadia Code', 'Fira Code', monospace;
+  font-size: 13px;
+  color: #ef5350;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.token-value {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.token-desc {
+  font-size: 13px;
+  color: var(--mat-sys-on-surface-variant);
+}

@@ -1,0 +1,65 @@
+.instance-card {
+  border-left: 4px solid;
+}
+
+.card-header-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 2px 12px;
+  border-radius: 12px;
+}
+
+.level-label {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.meta {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--mat-sys-on-surface-variant);
+  margin-bottom: 16px;
+}
+
+.separator {
+  opacity: 0.4;
+}
+
+.counter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.counter-label {
+  font-size: 14px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.counter-value {
+  font-size: 32px;
+  font-weight: 700;
+  min-width: 48px;
+  text-align: center;
+}
+
+.counter-buttons {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.counter-btn {
+  transform: scale(0.85);
+}

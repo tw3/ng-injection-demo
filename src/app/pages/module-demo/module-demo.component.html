@@ -1,0 +1,54 @@
+<h1 class="page-title">Module-Level Injection</h1>
+<p class="page-subtitle">
+  In the classic <code>NgModule</code> system, services listed in a module's
+  <code>providers</code> array are added to the nearest environment injector.
+  In modern standalone Angular, you can use <code>importProvidersFrom()</code> to
+  extract a module's providers into a route or application config.
+</p>
+
+<app-code-snippet
+  title="The NgModule (demo.module.ts)"
+  [code]="moduleCode"
+/>
+
+<app-code-snippet
+  title="How it's used in routes (module-demo.routes.ts)"
+  [code]="routesCode"
+/>
+
+<div class="demo-section">
+  <h2 class="demo-section-title">Live Demo: Module-Scoped Instance</h2>
+  <div class="explanation-box">
+    The <code>DemoModule</code> provides TrackerService. Since it's imported via
+    <code>importProvidersFrom()</code> inside a lazy-loaded route, the service is scoped
+    to this route's environment injector. This component gets the module-level instance.
+  </div>
+
+  <div class="card-grid">
+    <app-instance-card [tracker]="moduleTracker" />
+  </div>
+</div>
+
+<div class="demo-section">
+  <h2 class="demo-section-title">Important: Eager vs. Lazy Modules</h2>
+  <div class="explanation-box warning">
+    <strong>Eager modules:</strong> If you import a module eagerly in the root config
+    (e.g., <code>importProvidersFrom(DemoModule)</code> in <code>app.config.ts</code>),
+    its providers merge into the <strong>root injector</strong> &mdash; making them
+    application-wide singletons.
+    <br><br>
+    <strong>Lazy modules:</strong> If a module is loaded via a lazy route (as in this demo),
+    its providers are scoped to that route's environment injector. This means they are
+    <strong>not</strong> available outside that route, and they are destroyed when the
+    user navigates away.
+    <br><br>
+    This distinction is a common source of confusion. Check the Instance Monitor to see
+    the module-level instance appear and disappear as you navigate to and from this page.
+  </div>
+</div>
+
+<div class="explanation-box success">
+  <strong>Key takeaway:</strong> NgModule providers behave differently depending on
+  whether the module is eagerly or lazily loaded. In modern Angular with standalone
+  components, prefer route-level or root-level providers for clearer scoping.
+</div>
