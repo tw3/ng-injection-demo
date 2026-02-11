@@ -19,30 +19,49 @@ export class PlatformDemoComponent {
 
   rootTracker = inject(TrackerService);
 
-  platformCode = `// Low-level API to provide at platform level
-import { createPlatformFactory, platformCore } from '@angular/core';
+  providedInCode = `// The modern way: providedIn: 'platform'
+@Injectable({ providedIn: 'platform' })
+export class SharedAnalyticsService {
+  // This single instance is shared across ALL Angular apps
+  // bootstrapped on the same page — not just one app.
+  private events: AnalyticsEvent[] = [];
+
+  track(event: AnalyticsEvent): void {
+    this.events.push(event);
+  }
+}
+
+// Any component in any app on the page can inject it:
+export class SomeComponent {
+  private analytics = inject(SharedAnalyticsService);
+}`;
+
+  comparisonCode = `// providedIn scope comparison
+@Injectable({ providedIn: 'root' })
+// -> ONE instance per application
+// -> Each app on the page gets its own
+
+@Injectable({ providedIn: 'platform' })
+// -> ONE instance shared across ALL apps on the page
+// -> Ideal for cross-app communication, shared analytics, etc.`;
+
+  advancedCode = `// Advanced alternative: createPlatformFactory
+// Use this when you need to provide non-tree-shakable tokens
+// or configure third-party services at the platform level.
+import { createPlatformFactory } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
-// Create a custom platform with additional providers
 const customPlatform = createPlatformFactory(
-  platformBrowser,       // parent platform factory
-  'myCustomPlatform',    // platform name
+  platformBrowser,
+  'myCustomPlatform',
   [
-    // These providers are at the PLATFORM level
     { provide: SharedAnalytics, useClass: SharedAnalyticsImpl },
     { provide: PLATFORM_CONFIG, useValue: { debug: true } },
   ]
 );
 
-// All apps bootstrapped on this platform share these providers
-customPlatform().bootstrapModule(AppModule);`;
-
-  multiAppCode = `// Multiple Angular apps sharing a platform
 const platform = customPlatform();
-
-// Both apps share the same platform-level providers
 platform.bootstrapModule(App1Module);
 platform.bootstrapModule(App2Module);
-
-// SharedAnalytics is the SAME instance in both apps!`;
+// SharedAnalytics is the SAME instance in both apps`;
 }

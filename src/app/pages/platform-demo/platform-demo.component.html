@@ -1,15 +1,67 @@
 <h1 class="page-title">Platform-Level Injection</h1>
 <p class="page-subtitle">
-  The <strong>platform injector</strong> is the highest level in Angular's injector
+  The <strong>platform injector</strong> sits above the root injector in Angular's
   hierarchy. It is created when the Angular platform is initialized and is shared
-  across <em>all applications</em> running on the same page. Platform-level providers
-  are rarely used directly in application code, but they underpin the entire DI system.
+  across <em>all applications</em> bootstrapped on the same page. The modern way to
+  provide a service at this level is with
+  <code>&#64;Injectable({{ '{' }} providedIn: 'platform' {{ '}' }})</code>.
 </p>
+
+<div class="demo-section">
+  <h2 class="demo-section-title">Using <code>providedIn: 'platform'</code></h2>
+  <div class="explanation-box">
+    Just like <code>providedIn: 'root'</code> creates a singleton within a single
+    application, <code>providedIn: 'platform'</code> creates a singleton shared across
+    <strong>all Angular applications</strong> on the page. This is useful when multiple
+    Angular apps (or Angular Elements) need to share state without passing data through
+    the DOM.
+  </div>
+
+  <app-code-snippet
+    title="providedIn: 'platform' (recommended)"
+    [code]="providedInCode"
+  />
+
+  <app-code-snippet
+    title="root vs. platform scope"
+    [code]="comparisonCode"
+  />
+</div>
+
+<div class="demo-section">
+  <h2 class="demo-section-title">When to use <code>providedIn: 'platform'</code></h2>
+  <div class="use-cases">
+    <div class="use-case-card">
+      <div class="use-case-icon">🧩</div>
+      <div class="use-case-title">Angular Elements</div>
+      <div class="use-case-desc">
+        Multiple Angular Elements on the same page can share a service instance
+        for cross-element communication.
+      </div>
+    </div>
+    <div class="use-case-card">
+      <div class="use-case-icon">📊</div>
+      <div class="use-case-title">Shared Analytics</div>
+      <div class="use-case-desc">
+        A single analytics service collects events from all apps on the page
+        into one stream.
+      </div>
+    </div>
+    <div class="use-case-card">
+      <div class="use-case-icon">🔐</div>
+      <div class="use-case-title">Authentication</div>
+      <div class="use-case-desc">
+        Share an auth session across micro-frontend apps so users don't
+        authenticate separately in each.
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="demo-section">
   <h2 class="demo-section-title">Built-in Platform Tokens</h2>
   <div class="explanation-box">
-    Angular provides several tokens at the platform level. These are available to
+    Angular itself provides several tokens at the platform level. These are available to
     every application bootstrapped on the page:
   </div>
 
@@ -32,32 +84,41 @@
   </div>
 </div>
 
-<app-code-snippet
-  title="Providing at the platform level"
-  [code]="platformCode"
-/>
-
-<app-code-snippet
-  title="Multiple apps sharing a platform"
-  [code]="multiAppCode"
-/>
-
 <div class="demo-section">
   <h2 class="demo-section-title">Root-Level Instance (for comparison)</h2>
   <div class="explanation-box">
-    Since providing custom services at the platform level requires low-level APIs
-    (<code>createPlatformFactory</code>), this page shows the <strong>root-level</strong>
-    TrackerService instance instead. In practice, the root level is the highest level
-    most applications will use.
+    This demo app runs a single Angular application, so there is no observable difference
+    between a <code>providedIn: 'root'</code> service and a
+    <code>providedIn: 'platform'</code> service. The card below shows the
+    <strong>root-level</strong> TrackerService instance. The distinction only matters when
+    multiple Angular apps are bootstrapped on the same page.
   </div>
   <div class="card-grid">
     <app-instance-card [tracker]="rootTracker" />
   </div>
 </div>
 
+<div class="demo-section">
+  <h2 class="demo-section-title">Advanced: <code>createPlatformFactory</code></h2>
+  <div class="explanation-box">
+    Before <code>providedIn: 'platform'</code> existed (Angular 9+), the only way to
+    provide services at the platform level was through the low-level
+    <code>createPlatformFactory</code> API. This is still useful when you need to provide
+    non-tree-shakable tokens or configure third-party services that aren't decorated with
+    <code>&#64;Injectable</code>.
+  </div>
+
+  <app-code-snippet
+    title="createPlatformFactory (advanced alternative)"
+    [code]="advancedCode"
+  />
+</div>
+
 <div class="explanation-box success">
-  <strong>Key takeaway:</strong> The platform injector exists above the root injector.
-  It holds framework-level tokens like <code>PLATFORM_ID</code> and <code>DOCUMENT</code>.
-  Custom platform providers are only needed in advanced scenarios (e.g., multiple Angular
-  apps on one page sharing services, or custom rendering engines).
+  <strong>Key takeaway:</strong> Use
+  <code>&#64;Injectable({{ '{' }} providedIn: 'platform' {{ '}' }})</code> to share a
+  singleton service across all Angular applications on the same page. For single-app
+  projects, <code>providedIn: 'root'</code> is sufficient. The platform scope becomes
+  important with Angular Elements, micro-frontends, or any scenario with multiple
+  bootstrapped apps.
 </div>

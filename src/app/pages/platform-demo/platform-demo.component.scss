@@ -31,3 +31,33 @@
   font-size: 13px;
   color: var(--mat-sys-on-surface-variant);
 }
+
+.use-cases {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.use-case-card {
+  background: var(--mat-sys-surface-container);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.use-case-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.use-case-title {
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.use-case-desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--mat-sys-on-surface-variant);
+}
