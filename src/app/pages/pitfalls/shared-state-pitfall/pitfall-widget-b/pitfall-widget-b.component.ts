@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { provideTracker, TrackerService } from '../../../services/tracker.service';
-import { InstanceCardComponent } from '../../../shared/instance-card/instance-card.component';
+import { provideTracker, TrackerService } from '../../../../services/tracker.service';
+import { InstanceCardComponent } from '../../../../shared/instance-card/instance-card.component';
 
 @Component({
   selector: 'app-pitfall-widget-b',

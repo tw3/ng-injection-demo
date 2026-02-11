@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { TrackerService } from '../../services/tracker.service';
-import { InstanceCardComponent } from '../../shared/instance-card/instance-card.component';
-import { CodeSnippetComponent } from '../../shared/code-snippet/code-snippet.component';
+import { TrackerService } from '../../../services/tracker.service';
+import { InstanceCardComponent } from '../../../shared/instance-card/instance-card.component';
+import { CodeSnippetComponent } from '../../../shared/code-snippet/code-snippet.component';
 import { OverrideChildComponent } from './override-child/override-child.component';
 
 @Component({

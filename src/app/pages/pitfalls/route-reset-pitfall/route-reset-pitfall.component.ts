@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { CodeSnippetComponent } from '../../shared/code-snippet/code-snippet.component';
+import { CodeSnippetComponent } from '../../../shared/code-snippet/code-snippet.component';
 import { EphemeralWidgetComponent } from './ephemeral-widget/ephemeral-widget.component';
 
 @Component({

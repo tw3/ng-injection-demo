@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { PitfallWidgetAComponent } from './pitfall-widget-a/pitfall-widget-a.component';
 import { PitfallWidgetBComponent } from './pitfall-widget-b/pitfall-widget-b.component';
-import { CodeSnippetComponent } from '../../shared/code-snippet/code-snippet.component';
+import { CodeSnippetComponent } from '../../../shared/code-snippet/code-snippet.component';
 
 @Component({
   selector: 'app-shared-state-pitfall',
