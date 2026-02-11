@@ -71,10 +71,15 @@
   content: '';
   position: absolute;
   top: 50%;
-  left: 24px;
-  right: 24px;
+  left: 25%;
+  right: 25%;
   height: 2px;
   background: var(--mat-sys-outline-variant);
+}
+
+.tree-branch > .tree-node {
+  position: relative;
+  z-index: 1;
 }
 
 .concepts-grid {
